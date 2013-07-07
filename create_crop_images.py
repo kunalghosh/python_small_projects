@@ -83,4 +83,5 @@ if __name__ == "__main__":
            logging.debug("Cropping :" + str(topLeftPixWidthWise) + " : " + str(topLeftPixHeightWise))
            save_cropped_images(im, crop_rectangle, DIRECTORY, IMAGE_NAME)
 
+    print("Completed.")
        
