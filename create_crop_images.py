@@ -10,8 +10,10 @@ def save_cropped_images(image,crop_rectangle,directory,imageName):
     # image get filled with black.
     # And if the image is RGBA then the portion is colored white.
     cropped_image = image.crop(crop_rectangle)
+
     # The below show() is very irritating, would ope a lot of windows :P
     #cropped_image.show()
+
     #croppedFileName = directory + os.path.sep + imageName + "_" + str(int(time.time()*1000000)) + ".png"
     croppedFileName = directory + os.path.sep + imageName + "_" + "_".join(str(element) for element in crop_rectangle) + ".png"
     logging.debug(croppedFileName)
@@ -63,7 +65,9 @@ if __name__ == "__main__":
     else:
         im = Image.open(args.imagePath)
     
-    im.show()
+    # Use the below statement to view the image being processed.
+    if args.loglevel.upper() == "DEBUG":
+        im.show()
     
     IMAGE_NAME = os.path.basename(args.imagePath).replace(".","_")
 
