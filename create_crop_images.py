@@ -9,7 +9,8 @@ def save_cropped_images(image,crop_rectangle,directory,imageName):
     cropped_image = image.crop(crop_rectangle)
     # The below show() is very irritating, would ope a lot of windows :P
     #cropped_image.show()
-    croppedFileName = directory + os.path.sep + imageName + "_" + str(int(time.time()*1000000)) + ".png"
+    #croppedFileName = directory + os.path.sep + imageName + "_" + str(int(time.time()*1000000)) + ".png"
+    croppedFileName = directory + os.path.sep + imageName + "_" + "_".join(str(element) for element in crop_rectangle) + ".png"
     logging.debug(croppedFileName)
     print("."),
     cropped_image.save(croppedFileName)
@@ -68,7 +69,6 @@ if __name__ == "__main__":
 
     for topLeftPixWidthWise in range(0,IMAGE_WIDTH,args.widthStep):
         for topLeftPixHeightWise in range(0,IMAGE_HEIGHT,args.heightStep):
-           #cropWidth,cropHeight,topLeft,topRight,bottomLeft,bottomRight
            crop_rectangle = (topLeftPixWidthWise, topLeftPixHeightWise, topLeftPixWidthWise + CROP_WIDTH, topLeftPixHeightWise + CROP_HEIGHT) 
            logging.debug("Cropping :" + str(topLeftPixWidthWise) + " : " + str(topLeftPixHeightWise))
            save_cropped_images(im, crop_rectangle, DIRECTORY, IMAGE_NAME)
