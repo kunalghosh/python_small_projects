@@ -6,6 +6,9 @@ import time
 
 
 def save_cropped_images(image,crop_rectangle,directory,imageName):
+    # If the image is GrayScale then cropped portions which lie outside the original
+    # image get filled with black.
+    # And if the image is RGBA then the portion is colored white.
     cropped_image = image.crop(crop_rectangle)
     # The below show() is very irritating, would ope a lot of windows :P
     #cropped_image.show()
@@ -26,6 +29,7 @@ if __name__ == "__main__":
     parser.add_argument("widthStep",help="The Step size while translating the cropping window width wise. Default value = "+str(CROP_WIDTH/2)+"px.",default=CROP_WIDTH/2,type=int)
     parser.add_argument("heightStep",help="The Step size while translating the cropping window height wise. Default value = "+str(CROP_HEIGHT/2)+"px.",default=CROP_HEIGHT/2,type=int)
     parser.add_argument("--loglevel",help="The Debug level",default="CRITICAL")
+    parser.add_argument("-g", "--grayscale", action="store_true", help="Convert The Image to a GrayScale Image.")
 
     args = parser.parse_args()
 
@@ -54,7 +58,13 @@ if __name__ == "__main__":
     logging.debug(args)
 
     # open the Image provided by the user.
-    im = Image.open(args.imagePath)
+    if args.grayscale:
+        im = Image.open(args.imagePath).convert('L')
+    else:
+        im = Image.open(args.imagePath)
+    
+    im.show()
+    
     IMAGE_NAME = os.path.basename(args.imagePath).replace(".","_")
 
     IMAGE_WIDTH, IMAGE_HEIGHT = im.size
